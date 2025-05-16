@@ -1,0 +1,10 @@
+learning_rate,dropout_fc_rate,run_name,valid_acc
+0.0005,0.35,improved_grid_trial_7,87.77777777777777
+0.001,0.3,improved_grid_trial_0,87.4074074074074
+0.0007,0.4,improved_grid_trial_5,87.4074074074074
+0.0005,0.3,improved_grid_trial_6,87.4074074074074
+0.001,0.4,improved_grid_trial_2,87.03703703703704
+0.0007,0.35,improved_grid_trial_4,87.03703703703704
+0.001,0.35,improved_grid_trial_1,86.66666666666667
+0.0007,0.3,improved_grid_trial_3,86.66666666666667
+0.0005,0.4,improved_grid_trial_8,85.55555555555556
