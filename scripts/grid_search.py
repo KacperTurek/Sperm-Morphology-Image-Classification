@@ -111,7 +111,7 @@ def prepare_dataset(data_path, batch, model_path):
     
 
 def train_with_params(run_id, num_epochs, patience, params, train_loader, valid_loader, model_path):
-    run_name = f"improved_grid_trial_{run_id}"
+    run_name = f"grid_trial_{run_id}"
     print(f"\nTraining {run_name} with params: {params}")
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
