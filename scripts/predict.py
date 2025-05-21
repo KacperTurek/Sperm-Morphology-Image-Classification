@@ -49,10 +49,10 @@ def prepare_image(image_path):
     image = transform(image).unsqueeze(0)
     return image
 
-def predict(model_name, model_path, image):
+def predict(weights, model_path, image):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = ImprovedCNN(dropout_rate=0.35).to(device)
-    model.load_state_dict(torch.load(f"{model_path}/{model_name}", weights_only=True))
+    model.load_state_dict(torch.load(f"{model_path}/{weights}", weights_only=True))
     class_names = ['Normal_Sperm', 'Abnormal_Sperm', 'Non-Sperm'] 
     model.eval()
     with torch.no_grad():
@@ -66,22 +66,20 @@ def predict(model_name, model_path, image):
 def main(opt):
     image_path = opt.image_path
     model_path = opt.model_path
-    model_name = opt.model_name
+    weights = opt.weights
     results_path = opt.results_path
-    if results_path:
-        print(f"Results will be saved to {results_path}")
+    print(f"Results will be saved to {results_path}")
     image = prepare_image(image_path)
-    results = predict(model_name, model_path, image)
-    if results_path:
-        df = pd.DataFrame([{"image_path": image_path, "class": results}])
-        df.to_csv(f"{results_path}", index=False)
+    results = predict(weights, model_path, image)
+    df = pd.DataFrame([{"image_path": image_path, "class": results}])
+    df.to_csv(f"{results_path}", index=False)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--image_path', type=str, default='data/Normal_Sperm/Normal_Sperm (609).bmp', help='Path to image')
     parser.add_argument('--model_path', type=str, default='models/train_script')
-    parser.add_argument('--model_name', type=str, default='2025-05-19_12:15.pt')
-    parser.add_argument('--results_path', type=str)
+    parser.add_argument('--weights', type=str, default='2025-05-19_12:15.pt')
+    parser.add_argument('--results_path', type=str, default='results.csv')
     opt = parser.parse_args()
 
     main(opt)
